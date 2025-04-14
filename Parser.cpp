@@ -1,8 +1,9 @@
 #include "Parser.h"
+#include "Bin_heap.h"
 #include <algorithm>
 #include <fstream>
+#include <print>
 #include <stdexcept>
-
 
 
 std::vector<std::string> Parser::split_line(const std::string& s,
@@ -30,6 +31,27 @@ Container Parser::parse(const std::string& path)
     }
 
     return temp;
+}
+
+std::vector<Parser::item> Parser::get_forty_longest() const
+{
+    const unsigned num_longest{40};
+    auto cmp = [](auto a, auto b) { return a.second < b.second; };
+
+    std::vector<item> result(num_longest);
+
+    Bin_heap<item, std::vector<item>, decltype(cmp)> temp(cmp);
+
+    for (const auto& x : _cont)
+        if (x.first.length() > 3) temp.push(x);
+
+    for (size_t i{}; i < num_longest; ++i)
+    {
+        result[i] = temp.top();
+        temp.pop();
+    }
+
+    return result;
 }
 
 

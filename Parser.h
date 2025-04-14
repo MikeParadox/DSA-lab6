@@ -1,7 +1,3 @@
-//
-// Created by mikhail on 12/04/2025.
-//
-
 #ifndef LAB6_PARSER_H
 #define LAB6_PARSER_H
 
@@ -18,8 +14,10 @@ using Container = std::map<std::string, unsigned>;
 class Parser
 {
 public:
+    using item = std::pair<std::string, unsigned>;
     explicit Parser(const std::string& path) : _cont{parse(path)} {}
     //    [[nodiscard]] const Container& container() const { return _cont; }
+    [[nodiscard]] std::vector<item> get_forty_longest() const;
 
 private:
     Container _cont;
